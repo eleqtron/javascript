@@ -1,4 +1,9 @@
 var Person = function(name) {
+
+  if(!(this instanceof Person)) {
+    return new Person(name)
+  }
+
   this.name = name;
 };
 
