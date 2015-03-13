@@ -1,8 +1,9 @@
 var Person = function(name) {
   this.name = name;
-  this.sayName = function() {
-    return 'I am ' + this.name;
-  }
+};
+
+Person.prototype.sayName = function() {
+  return 'I am ' + this.name;
 };
 
 var adam = new Person('Adam');
