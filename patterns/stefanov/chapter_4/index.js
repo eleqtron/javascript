@@ -5,5 +5,15 @@ var setup = function() {
   }
 };
 var next = setup();
-console.log(next());
-console.log(next());
+//console.log(next());
+//console.log(next());
+
+var scareMe = function() {
+  console.log('Boo!');
+  scareMe = function() {
+    console.log('DoubleBoo!');
+  };
+};
+
+scareMe();
+scareMe();
