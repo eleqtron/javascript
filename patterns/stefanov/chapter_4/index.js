@@ -39,10 +39,9 @@ var scareMe = function() {
 
 
 function add(x,y) {
-  var oldx = x, oldy = y;
-  if(typeof oldy === 'undefined') {
-    return function(newy) {
-      return oldx + newy;
+  if(typeof y === 'undefined') {
+    return function(y) {
+      return x + y;
     }
   }
   return x + y;
