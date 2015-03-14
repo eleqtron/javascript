@@ -23,5 +23,16 @@ var scareMe = function() {
     days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     today = new Date(),
     msg = 'Today is ' + days[today.getDay()] + ', ' + today.getDate();
-  console.log(msg);
+//  console.log(msg);
 }());
+
+({
+  min: 0,
+  max: 100,
+  gimmeMax: function() {
+    return this.max
+  },
+  init: function() {
+    console.log(this.gimmeMax());
+  }
+}).init();
