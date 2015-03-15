@@ -106,19 +106,23 @@ Sandbox('ajax', 'dom', function(box) {
   console.log('Sandbox work!');
 });
 
-var Car = function() {};
-
-Car.isShiny = function() {
-  return 'yes'
-};
-
-Car.prototype.setPrice = function(price) {
+var Car = function(price) {
   this.price = price;
 };
 
+Car.isShiny = function() {
+  var msg = 'yes';
+  if (this instanceof Car) {
+    msg += ", it coast $" + this.price +'!';
+  }
+  return msg;
+};
+
+Car.prototype.isShiny = function() {
+  return Car.isShiny.call(this);
+};
+
 console.log(Car.isShiny());
-var ferrari = new Car();
-ferrari.setPrice(1000000);
+var ferrari = new Car(1000000);
 console.log(ferrari.price);
-Car.prototype.isShiny = Car.isShiny;
 console.log(ferrari.isShiny());
