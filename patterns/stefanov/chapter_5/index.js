@@ -1,43 +1,45 @@
-function Gadget() {
-  var name = 'iPod';
-  this.getName = function() {
-    return name;
-  }
-}
-
-Gadget.prototype = (function() {
-  var browser = 'Mobile Webkit';
-  return {
-    getBrowser: function() {
-      return browser
-    }
-  }
-}());
-
-var toy = new Gadget();
-//console.log(toy.getName());
-//console.log(toy.getBrowser());
-
-var myobj;
-(function() {
-  var name = 'my, oh my';
-  myobj = {
-    getName: function() {
+(function(){
+  function Gadget() {
+    var name = 'iPod';
+    this.getName = function() {
       return name;
     }
   }
-}());
-//console.log(myobj.getName());
 
-var newobj = (function() {
-  var name = 'my, oh my';
-  return {
-    getName: function() {
-      return name;
+  Gadget.prototype = (function() {
+    var browser = 'Mobile Webkit';
+    return {
+      getBrowser: function() {
+        return browser
+      }
     }
-  }
+  }());
+
+  var toy = new Gadget();
+  //console.log(toy.getName());
+  //console.log(toy.getBrowser());
+
+  var myobj;
+  (function() {
+    var name = 'my, oh my';
+    myobj = {
+      getName: function() {
+        return name;
+      }
+    }
+  }());
+  //console.log(myobj.getName());
+
+  var newobj = (function() {
+    var name = 'my, oh my';
+    return {
+      getName: function() {
+        return name;
+      }
+    }
+  }());
+  //console.log(myobj.getName());
 }());
-//console.log(myobj.getName());
 
 function Sandbox() {
   var
@@ -126,3 +128,17 @@ console.log(Car.isShiny());
 var ferrari = new Car(1000000);
 console.log(ferrari.price);
 console.log(ferrari.isShiny());
+
+
+(function() {
+  var Gadget = (function() {
+    var counter = 0;
+    return function() {
+      console.log(counter+=1);
+    };
+  }());
+
+  var g1 = new Gadget();
+  var g2 = new Gadget();
+
+}());
