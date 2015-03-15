@@ -15,5 +15,16 @@ Gadget.prototype = (function() {
 }());
 
 var toy = new Gadget();
-console.log(toy.getName());
-console.log(toy.getBrowser());
+//console.log(toy.getName());
+//console.log(toy.getBrowser());
+
+var myobj;
+(function() {
+  var name = 'my, oh my';
+  myobj = {
+    getName: function() {
+      return name;
+    }
+  }
+}());
+console.log(myobj.getName())
