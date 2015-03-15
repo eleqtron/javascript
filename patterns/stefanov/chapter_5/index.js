@@ -105,3 +105,20 @@ Sandbox('ajax', 'dom', function(box) {
   console.log(box.getVersion());
   console.log('Sandbox work!');
 });
+
+var Car = function() {};
+
+Car.isShiny = function() {
+  return 'yes'
+};
+
+Car.prototype.setPrice = function(price) {
+  this.price = price;
+};
+
+console.log(Car.isShiny());
+var ferrari = new Car();
+ferrari.setPrice(1000000);
+console.log(ferrari.price);
+Car.prototype.isShiny = Car.isShiny;
+console.log(ferrari.isShiny());
