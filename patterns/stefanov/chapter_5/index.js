@@ -132,13 +132,26 @@ console.log(ferrari.isShiny());
 
 (function() {
   var Gadget = (function() {
-    var counter = 0;
-    return function() {
-      console.log(counter+=1);
+    var
+      counter = 0,
+      NewGadget;
+
+    NewGadget = function() {
+      counter += 1;
     };
+
+    NewGadget.prototype.getLastId = function() {
+      return counter;
+    };
+
+    return NewGadget;
+
   }());
 
   var g1 = new Gadget();
+  console.log(g1.getLastId());
+
   var g2 = new Gadget();
+  console.log(g2.getLastId());
 
 }());
