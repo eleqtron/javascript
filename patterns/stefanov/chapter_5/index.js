@@ -27,4 +27,14 @@ var myobj;
     }
   }
 }());
-console.log(myobj.getName())
+//console.log(myobj.getName());
+
+var newobj = (function() {
+  var name = 'my, oh my';
+  return {
+    getName: function() {
+      return name;
+    }
+  }
+}());
+console.log(myobj.getName());
