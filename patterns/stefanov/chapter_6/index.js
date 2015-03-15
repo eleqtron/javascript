@@ -52,3 +52,27 @@ function log(message) {
 //  log(blog.hasOwnProperty('tags'));
 //  log(page.hasOwnProperty('tags'));
 }());
+
+(function() {
+
+  function Cat() {
+    this.legs = 4;
+    this.say = function() {
+      return 'meaoww';
+    }
+  }
+
+  function Bird() {
+    this.wings = 2;
+    this.fly = true;
+  }
+
+  function CatWings() {
+    Cat.apply(this);
+    Bird.apply(this);
+  }
+
+  var jane = new CatWings();
+  log(jane)
+
+}());
