@@ -40,14 +40,7 @@ function singleton() {
 
     }
 
-    var uni1,uni2;
-    Universe.prototype.nothing = true;
-    uni1 = new Universe();
-    Universe.prototype.everything = true;
-    uni2 = new Universe();
-    console.log('uni1 === uni2: ', uni1 === uni2);
-    console.log('has nothing && everything: ', uni1.nothing && uni1.everything && uni2.nothing && uni2.everything);
-    console.log('bang: ', uni1.bang);
+    show_results(Universe);
 
   }());
 
@@ -73,6 +66,36 @@ function singleton() {
       return instance;
     }
 
+    show_results(Universe);
+
+  }());
+
+  //variant 4
+  //экземпляр в замыкании с сохранением свойств добавленных в прототип
+  (function() {
+
+    var Universe;
+
+    (function() {
+
+      var instance;
+
+      Universe = function() {
+        if(instance) {
+          return instance;
+        }
+        instance = this;
+        instance.start_time = 0;
+        instance.bang = 'Big';
+        return instance;
+      };
+    }());
+
+    show_results(Universe);
+
+  }());
+
+  function show_results(Universe) {
     var uni1,uni2;
     Universe.prototype.nothing = true;
     uni1 = new Universe();
@@ -81,9 +104,7 @@ function singleton() {
     console.log('uni1 === uni2: ', uni1 === uni2);
     console.log('has nothing && everything: ', uni1.nothing && uni1.everything && uni2.nothing && uni2.everything);
     console.log('bang: ', uni1.bang);
-    console.log('uni1.constructor == Universe: ', uni1.constructor == Universe);
-
-  }());
+  }
 
 }
 
