@@ -40,7 +40,12 @@ function singleton() {
 
     }
 
-    show_results(Universe);
+    var uni1,uni2;
+    Universe.prototype.nothing = true;
+    uni1 = new Universe();
+    Universe.prototype.everything = true;
+    uni2 = new Universe();
+    show_results(uni1,uni2);
 
   }());
 
@@ -66,7 +71,12 @@ function singleton() {
       return instance;
     }
 
-    show_results(Universe);
+    var uni1,uni2;
+    Universe.prototype.nothing = true;
+    uni1 = new Universe();
+    Universe.prototype.everything = true;
+    uni2 = new Universe();
+    show_results(uni1,uni2);
 
   }());
 
@@ -91,16 +101,16 @@ function singleton() {
       };
     }());
 
-    show_results(Universe);
-
-  }());
-
-  function show_results(Universe) {
     var uni1,uni2;
     Universe.prototype.nothing = true;
     uni1 = new Universe();
     Universe.prototype.everything = true;
     uni2 = new Universe();
+    show_results(uni1,uni2)
+
+  }());
+
+  function show_results(uni1,uni2) {
     console.log('uni1 === uni2: ', uni1 === uni2);
     console.log('has nothing && everything: ', uni1.nothing && uni1.everything && uni2.nothing && uni2.everything);
     console.log('bang: ', uni1.bang);
