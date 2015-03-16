@@ -73,6 +73,29 @@ function log(message) {
   }
 
   var jane = new CatWings();
-  log(jane)
+//  log(jane)
 
+}());
+
+(function() {
+
+  function Parent(name) {
+    this.name = name || 'Adam';
+  }
+
+  Parent.prototype.say = function() {
+    return this.name;
+  };
+
+  function Child(name) {
+    Parent.apply(this, arguments);
+  }
+
+  Child.prototype = new Parent();
+
+  var kid = new Child('Patrick');
+  log(kid.name);
+  log(kid.say());
+  delete kid.name;
+  log(kid.say());
 }());
