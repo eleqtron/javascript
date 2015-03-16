@@ -211,4 +211,146 @@ function iterator() {
   console.log(agg.current());
 
 }
-iterator();
+//iterator();
+
+function decorator() {
+
+  (function() {
+    function Sale(price) {
+      this.price = price;
+    }
+
+    Sale.prototype.getPrice = function() {
+      return this.price;
+    };
+
+    Sale.decorators = {};
+
+    Sale.decorators.fedtax = {
+      getPrice: function() {
+        var price = this.uber.getPrice();
+        price += price*5/100;
+        return price;
+      }
+    };
+
+    Sale.decorators.quebec = {
+      getPrice: function() {
+        var price = this.uber.getPrice();
+        price += price*7.5/100;
+        return price;
+      }
+    };
+
+    Sale.decorators.money = {
+      getPrice: function() {
+        return '$' + this.uber.getPrice().toFixed(2);
+      }
+    };
+
+    Sale.decorators.cdn = {
+      getPrice: function() {
+        return 'CDN$' + this.uber.getPrice().toFixed(2);
+      }
+    };
+
+    Sale.prototype.decorate = function(decorator) {
+      var
+        F = function() {},
+        overrrides = this.constructor.decorators[decorator],
+        i,newobj;
+
+      F.prototype = this;
+      newobj = new F();
+      newobj.uber = F.prototype;
+      for(i in overrrides) {
+        if(overrrides.hasOwnProperty(i)) {
+          newobj[i] = overrrides[i];
+        }
+      }
+      return newobj;
+    };
+
+    var sale = new Sale(100);
+    console.log(sale.getPrice());
+    sale = sale.decorate('fedtax');
+    sale = sale.decorate('quebec');
+    sale = sale.decorate('money');
+    console.log(sale.getPrice());
+
+    sale = new Sale(100);
+    console.log(sale.getPrice());
+    sale = sale.decorate('fedtax');
+    sale = sale.decorate('cdn');
+    console.log(sale.getPrice());
+  }());
+
+
+  (function() {
+
+    function Sale(price) {
+      this.price = price;
+      this.decorators_list = [];
+    }
+
+    Sale.prototype.getPrice = function() {
+      var
+        max = this.decorators_list.length,
+        price = this.price,
+        i,name;
+
+      for(i=0; i<max; i+=1) {
+        name = this.decorators_list[i];
+        price = Sale.decorators[name].getPrice(price);
+      }
+      return price;
+    };
+
+    Sale.decorators = {};
+
+    Sale.decorators.fedtax = {
+      getPrice: function(price) {
+        return price + price*5/100;
+      }
+    };
+
+    Sale.decorators.quebec = {
+      getPrice: function(price) {
+        return price + price*7.5/100;
+      }
+    };
+
+    Sale.decorators.money = {
+      getPrice: function(price) {
+        return '$' + price.toFixed(2);
+      }
+    };
+
+    Sale.decorators.cdn = {
+      getPrice: function(price) {
+        return 'CDN$' + price.toFixed(2);
+      }
+    };
+
+    Sale.prototype.decorate = function(decorator) {
+      this.decorators_list.push(decorator);
+    };
+
+    var sale = new Sale(100);
+    console.log(sale.getPrice());
+    sale.decorate('fedtax');
+    sale.decorate('quebec');
+    sale.decorate('money');
+    console.log(sale.getPrice());
+
+    sale = new Sale(100);
+    console.log(sale.getPrice());
+    sale.decorate('fedtax');
+    sale.decorate('cdn');
+    console.log(sale.getPrice());
+
+  }());
+
+}
+
+decorator();
