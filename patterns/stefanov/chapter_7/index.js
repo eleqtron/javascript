@@ -353,4 +353,92 @@ function decorator() {
 
 }
 
-decorator();
+//decorator();
+
+
+function strategy() {
+
+  var validator = {
+    types: {},
+    messages: [],
+    config: {},
+    validate: function(data) {
+      var i, msg, type, checker, result_ok;
+      this.messages = [];
+      for(i in data) {
+        if(data.hasOwnProperty(i)) {
+          type = this.config[i];
+          checker = this.types[type];
+          if(!type) {
+            continue;
+          }
+          if(!checker) {
+            throw {
+              name: 'ValidationError',
+              message: 'No handler to validate type '+ type
+            }
+          }
+
+          result_ok = checker.validate(data[i]);
+          if(!result_ok) {
+            msg = 'Invalid value for *' + i + '*, ' + checker.instructions();
+            this.messages.push(msg);
+          }
+
+        }
+      }
+      return this.hasErrors();
+    },
+    hasErrors: function() {
+      return this.messages.length !== 0;
+    }
+  };
+
+  validator.types.isNonEmpty = {
+    validate: function(value) {
+      return value !== '';
+    },
+    instructions: function() {
+      return 'the value can not be empty';
+    }
+  };
+
+  validator.types.isNumber = {
+    validate: function(value) {
+      return !isNaN(value);
+    },
+    instructions: function() {
+      return 'the value can be a valid number';
+    }
+  };
+
+  validator.types.isAlphaNum = {
+    validate: function(value) {
+      return !/[^a-z0-9]/i.test(value);
+    },
+    instructions: function() {
+      return 'the value can only contain characters and numbers';
+    }
+  };
+
+  var data = {
+    first_name: 'Super',
+    last_name: 'MAn',
+    age:'unknown',
+    username:'o_O'
+  };
+
+  validator.config = {
+    first_name: 'isNonEmpty',
+    age: 'isNumber',
+    username: 'isAlphaNum'
+  };
+
+  validator.validate(data);
+  if(validator.hasErrors()) {
+    console.log(validator.messages.join("\n"));
+  }
+
+}
+
+strategy();
