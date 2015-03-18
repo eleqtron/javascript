@@ -444,6 +444,7 @@ function strategy() {
 //strategy();
 
 function facade() {
+  //Example 1
   var myevent = {
     stop: function(e) {
       e.preventDefault();
@@ -451,6 +452,8 @@ function facade() {
     }
   };
 
+
+  //Example 2
   // a simple facade that masks the various browser-specific methods
   function addEvent( element, event, callback ) {
 
@@ -463,6 +466,58 @@ function facade() {
     }
 
   }
+
+  //Example 3
+  var Mortgage, Bank, Credit, Background;
+
+  Mortgage = function(name) {
+    this.name = name;
+  };
+
+  Mortgage.prototype = {
+    applyFor: function(amount) {
+      var result = 'approved';
+      if (!new Bank().verify(this.name, amount)) {
+        result = "denied";
+      } else if (!new Credit().get(this.name)) {
+        result = "denied";
+      } else if (!new Background().check(this.name)) {
+        result = "denied";
+      }
+      return this.name + " has been " + result + " for a " + amount + " mortgage";
+    }
+  };
+
+  Bank = function() {
+    this.verify = function(name, amount) {
+      //complex logic ...
+      return true;
+    }
+  };
+
+  Credit = function() {
+    this.get = function(name, amount) {
+      //complex logic ...
+      return true;
+    }
+  };
+
+  Background = function() {
+    this.check = function(name, amount) {
+      //complex logic ...
+      return true;
+    }
+  };
+
+  function run() {
+    var
+      mortrage = new Mortgage('John'),
+      result = mortrage.applyFor('$100000');
+    console.log(result);
+  }
+
+  run();
+
 }
 
 facade();
