@@ -586,4 +586,88 @@ function proxy() {
 
 }
 
-proxy();
+//proxy();
+
+
+//посредник
+function mediator() {
+
+  var
+    scoreboard,
+    mediator;
+
+  function Player(name) {
+    this.name = name;
+    this.points = 0;
+  }
+
+  Player.prototype.play = function() {
+    this.points += 1;
+    mediator.played();
+  };
+
+  scoreboard = {
+    update: function(score) {
+      var i, msg='';
+      for(i in score) {
+        if(score.hasOwnProperty(i)) {
+          msg += i + ' ' + score[i] + ' ';
+        }
+      }
+      console.log(msg);
+    }
+  };
+
+  mediator = {
+    players: {},
+    setup: function() {
+      var players = this.players;
+      players.home  = new Player('Home');
+      players.guest = new Player('Guest');
+    },
+    played: function() {
+      var
+        players = this.players,
+        score = {
+          Home: players.home.points,
+          Guest: players.guest.points
+        };
+      scoreboard.update(score);
+
+    },
+    keypress: function(e) {
+      e = e || window.event;
+      if(e.which === 49) {
+        mediator.players.guest.play();
+        return;
+      }
+      if(e.which === 48) {
+        mediator.players.home.play();
+        return;
+      }
+    },
+    winner: function() {
+      var
+        players = this.players;
+      if(players.home.points > players.guest.points) {
+        return players.home.name;
+      }
+      else if(players.home.points < players.guest.points) {
+        return players.guest.name;
+      }
+      else {
+        return 'Draw';
+      }
+    }
+  };
+
+  mediator.setup();
+  window.onkeypress = mediator.keypress;
+  setTimeout(function() {
+    window.onkeypress = null;
+    console.log('Game Over! Winner: ' + mediator.winner())
+  }, 3000);
+
+}
+
+mediator();
