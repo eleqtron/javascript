@@ -441,4 +441,15 @@ function strategy() {
 
 }
 
-strategy();
+//strategy();
+
+function facade() {
+  var myevent = {
+    stop: function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+}
+
+facade();
