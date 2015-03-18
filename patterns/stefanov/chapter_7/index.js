@@ -748,5 +748,17 @@ function observer() {
   paper.daily();
   paper.monthly();
 
+  makePublisher(joe);
+  joe.tweet = function(msg) {
+    this.publish(msg);
+  };
+
+  paper.readTweets = function(tweet) {
+    console.log('Call big Meeting! Someone ' + tweet);
+  };
+  joe.subscribe(paper.readTweets);
+
+  joe.tweet('hated the paper today!');
+
 }
 observer();
