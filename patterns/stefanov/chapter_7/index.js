@@ -815,7 +815,6 @@ function observer() {
 
       log.show();
 
-
     }
 
     run();
