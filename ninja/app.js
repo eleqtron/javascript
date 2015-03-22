@@ -12,14 +12,39 @@ function log() {
   }
 }
 
-function assert(value, desc) {
-  var li = document.createElement('li');
-  li.className = value ? 'pass' : 'fail';
-  li.appendChild(document.createTextNode(desc));
-  document.getElementById('results').appendChild(li);
-}
+(function() {
+  var results;
+  this.assert = function(value, desc) {
+    var li = document.createElement('li');
+    li.className = value ? 'pass' : 'fail';
+    li.appendChild(document.createTextNode(desc));
+    results.appendChild(li);
+    if(!value) {
+      li.parentNode.parentNode.className = 'fail';
+    }
+    return li;
+  };
+  this.test = function test(name, fn) {
+    results = document.getElementById('results');
+    results = assert(true, name).appendChild( document.createElement('ul') );
+    fn();
+  }
+}());
 
 window.onload = function() {
-  assert(true, 'The test suite is running');
-  assert(false, 'Fail!');
+  test('A test', function() {
+    assert(true, 'First test assertion completed');
+    assert(true, 'Second test assertion completed');
+    assert(true, 'Third test assertion completed');
+  });
+  test('B test', function() {
+    assert(true, 'First test assertion completed');
+    assert(false, 'Second test assertion failed');
+    assert(true, 'Third test assertion completed');
+  });
+  test('C test', function() {
+    assert(null, 'fail');
+    assert(5, 'pass');
+  });
+
 };
