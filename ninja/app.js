@@ -13,7 +13,26 @@ function log() {
 }
 
 (function() {
-  var results;
+  var queue = [], paused = false, results;
+
+  this.test = function test(name, fn) {
+    queue.push(function(){
+      results = document.getElementById('results');
+      results = assert(true, name).appendChild( document.createElement('ul') );
+      fn();
+    });
+    runTest();
+  };
+
+  this.pause = function() {
+    paused = true;
+  };
+
+  this.resume = function() {
+    paused = false;
+    setTimeout(runTest, 1);
+  };
+
   this.assert = function(value, desc) {
     var li = document.createElement('li');
     li.className = value ? 'pass' : 'fail';
@@ -24,27 +43,33 @@ function log() {
     }
     return li;
   };
-  this.test = function test(name, fn) {
-    results = document.getElementById('results');
-    results = assert(true, name).appendChild( document.createElement('ul') );
-    fn();
+
+  function runTest() {
+    if(!paused && queue.length) {
+      queue.shift()();
+      if(!paused) {
+        resume();
+      }
+    }
   }
+
 }());
 
 window.onload = function() {
-  test('A test', function() {
-    assert(true, 'First test assertion completed');
-    assert(true, 'Second test assertion completed');
-    assert(true, 'Third test assertion completed');
+  test("Async Test #1", function() {
+    pause();
+    setTimeout(function() {
+      assert(true, "First test completed");
+      resume();
+    }, 1000);
   });
-  test('B test', function() {
-    assert(true, 'First test assertion completed');
-    assert(false, 'Second test assertion failed');
-    assert(true, 'Third test assertion completed');
+  test("Async Test #2", function() {
+    pause();
+    setTimeout(function() {
+      assert(true, "Second test completed");
+      resume();
+    }, 1000);
   });
-  test('C test', function() {
-    assert(null, 'fail');
-    assert(5, 'pass');
-  });
-
 };
+
+
