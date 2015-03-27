@@ -26,14 +26,33 @@ window.onload = function() {
 
   var
     sneak = creep,
-    ninjai1 = new  Ninja(),
-    ninjai2 = new  Ninja();
+    ninja1 = new  Ninja(),
+    ninja2 = new  Ninja();
 
   test('functions', function() {
     assert( creep() == window, 'Creeping in the window' );
     assert( sneak() == window, 'Sneaking in the window' );
-    assert( ninjai1.skulk() === ninjai1, 'The 1st ninja is skulking' );
-    assert( ninjai2.skulk() === ninjai2, 'The 1st ninja is skulking' );
+    assert( ninja1.skulk() === ninja1, 'The 1st ninja is skulking' );
+    assert( ninja2.skulk() === ninja2, 'The 1st ninja is skulking' );
+  });
+
+  function juggle() {
+    var result = 0;
+    for(var n=0; n<arguments.length; n++) {
+      result += arguments[n];
+    }
+    this.result = result;
+  }
+
+  ninja1 = {};
+  ninja2 = {};
+
+  juggle.apply(ninja1, [1,2,3,4]);
+  juggle.call(ninja2, 1,2,3,4);
+
+  test('apply and call', function() {
+    assert( ninja1.result === 10, 'juggled via apply' );
+    assert( ninja2.result === 10, 'juggled via call' );
   });
 
 
