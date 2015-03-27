@@ -20,14 +20,14 @@ window.onload = function() {
 
   function creep() { return this;}
 
+  function Ninja() {
+    this.skulk = creep;
+  }
+
   var
     sneak = creep,
-    ninjai1 = {
-      skulk: creep
-    },
-    ninjai2 = {
-      skulk: creep
-    };
+    ninjai1 = new  Ninja(),
+    ninjai2 = new  Ninja();
 
   test('functions', function() {
     assert( creep() == window, 'Creeping in the window' );
