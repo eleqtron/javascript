@@ -14,6 +14,7 @@ window.onload = function() {
   test('IsNimble test', function() {
     assert( typeof isNimble === 'function', 'isNimble() is defined' );
     assert( isNimble.name === 'isNimble', 'isNimble() has a name isNimble' );
+
     assert( typeof canFly === 'function', 'canFly() is defined' );
   });
 
