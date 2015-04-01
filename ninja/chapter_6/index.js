@@ -1,16 +1,30 @@
 window.onload = function() {
 
-  function Ninja() {}
+  function Ninja() {
+
+    this.swung = false;
+
+    this.swingSword = function() {
+      return !this.swung;
+    };
+
+    this.getTestWord = function() {
+      return 'object';
+    }
+
+  }
 
   Ninja.prototype.swingSword = function() {
-    return true;
+    return this.swung;
   };
 
-  var
-    ninja = Ninja(),
-    ninja2 = new Ninja();
-  console.log('ninja === undefined', ninja === undefined);
-  console.log('ninja2 && ninja2.swingSword && ninja2.swingSword()', ninja2 && ninja2.swingSword && ninja2.swingSword());
+  Ninja.prototype.getTestWord = function() {
+    return 'prototype object';
+  };
+
+  var ninja = new Ninja();
+  console.log('ninja.swingSword', ninja.swingSword());
+  console.log('ninja.getTestWord', ninja.getTestWord());
 
 
 };
