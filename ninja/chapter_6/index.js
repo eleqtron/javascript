@@ -1,17 +1,7 @@
 window.onload = function() {
 
   function Ninja() {
-
     this.swung = false;
-
-    this.swingSword = function() {
-      return !this.swung;
-    };
-
-    this.getTestWord = function() {
-      return 'object';
-    }
-
   }
 
   Ninja.prototype.swingSword = function() {
@@ -19,7 +9,7 @@ window.onload = function() {
   };
 
   Ninja.prototype.getTestWord = function() {
-    return 'prototype object';
+    return 'test word';
   };
 
   var ninja = new Ninja();
