@@ -1,20 +1,14 @@
 window.onload = function() {
 
-  function Ninja() {
-    this.swung = false;
-  }
+  function Person(){}
+  Person.prototype.dance = function() {};
 
-  Ninja.prototype.swingSword = function() {
-    return this.swung;
-  };
-
-  Ninja.prototype.getTestWord = function() {
-    return 'test word';
-  };
+  function Ninja(){}
+  Ninja.prototype = {dance: Person.prototype.dance};
 
   var ninja = new Ninja();
-  console.log('ninja.swingSword', ninja.swingSword());
-  console.log('ninja.getTestWord', ninja.getTestWord());
-
+  console.log(ninja instanceof Ninja);
+  console.log(ninja instanceof Person);
+  console.log(ninja instanceof Object);
 
 };
