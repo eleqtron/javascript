@@ -1,14 +1,16 @@
 window.onload = function() {
 
-  function Person(){}
-  Person.prototype.dance = function() {};
+  function User(first_name, last_name) {
+   if(!(this instanceof arguments.callee)) {
+     return new User(first_name, last_name);
+   }
+   this.name = first_name + ' ' + last_name;
+  }
 
-  function Ninja(){}
-  Ninja.prototype = {dance: Person.prototype.dance};
+  var
+    name = 'Rukia',
+    user = User('Ichiro','Kurosava');
 
-  var ninja = new Ninja();
-  console.log(ninja instanceof Ninja);
-  console.log(ninja instanceof Person);
-  console.log(ninja instanceof Object);
-
+  console.log(name);
+  console.log(user.name);
 };
